@@ -6,6 +6,6 @@ describe('webpack', function(){
 
   it('sees the fun module', function(){
     var fun = require('../src/fun.js');
-    expect(fun).toBe(jasmine.anything());
+    expect(fun).toEqual(jasmine.any(Function));
   });
 });

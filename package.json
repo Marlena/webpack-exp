@@ -1,0 +1,16 @@
+{
+  "name" : "webpack-exp",
+  "version": "0.0.1",
+  "dependencies": {
+    "gulp": "latest",
+    "gulp-jasmine-browser": "latest",
+    "gulp-webpack": "latest",
+    "babel": "^5.2.6",
+    "babel-core": "^5.2.6",
+    "babel-loader": "^5.0.0",
+    "gulp-babel": "^5.1.0",
+    "gulp-eslint": "^0.9.0",
+    "gulp-jasmine": "^2.0.1"
+
+  }
+}
