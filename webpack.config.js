@@ -1,8 +1,12 @@
 module.exports = {
-  entry: "./entry.js",
+  entry: {
+    "./entry.js",
+    "./src/fun.js"
+  },
   output: {
     path: __dirname,
-    filename: "bundle.js"
+    filename: "[name]bundle.js",
+    chunkFilename: "[id].bundle.js"
   },
   module: {
     loaders: [
