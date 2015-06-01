@@ -1,16 +1,17 @@
 module.exports = {
-  entry: {
-    "./entry.js",
-    "./src/fun.js"
-  },
   output: {
-    path: __dirname,
-    filename: "[name]bundle.js",
-    chunkFilename: "[id].bundle.js"
+    filename: "spec.js"
   },
   module: {
     loaders: [
+      {
+        test: /\.js?$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'babel-loader?optional[]=runtime'
+      },
       { test: /\.css$/, loader: "style!css" }
+
     ]
-  }
+  },
+  watch: true
 };
