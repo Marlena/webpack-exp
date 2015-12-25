@@ -2,16 +2,10 @@ var subject = 'Lourdes';
 
 var greeting = function(name){
 
-  if (!name) return salutation() + 'friend';
-
-  if (name[0].length > 1){
-    return salutation(name) + name[0] + ' and ' + name[1];
-  }
-
   //what if there were two functions, first name and last name.
   //if there is only 1 name, last name returns empty.
 
-  return salutation(name) + name;
+  return salutation(name) + names(name);
 
 };
 
@@ -23,6 +17,16 @@ var salutation = function(name){
 
   return (regex.test(name) && salutation.toUpperCase()) || salutation;
 
+};
+
+var names = function(name){
+  if (!name) return 'friend';
+
+  if (name[0].length > 1){
+    return name[0] + ' and ' + name[1];
+  }
+
+  return name;
 };
 
 describe('Greeting', function(){
@@ -57,6 +61,27 @@ describe('Greeting', function(){
       expect(salutation('ALYSSA')).toEqual('HELLO ');
     });
 
+  });
+
+  describe('names', function(){
+
+    var name;
+
+    it('returns a name', function(){
+      expect(names('Anna')).toEqual('Anna');
+    });
+
+    it('returns friend if name is empty', function(){
+      name = null;
+
+      expect(names(name)).toEqual('friend');
+    });
+
+    it('Given 2 names, returns Name1 and Name2', function(){
+      name = ['Trish', 'Jessica'];
+
+      expect(names(name)).toEqual('Trish and Jessica');
+    });
   });
 
 });
