@@ -28,9 +28,14 @@ var names = function(name){
   if (!name) return 'friend';
 
   if (isArray(name)){
-    return name[0] + ' and ' + name[1];
-  }
+    if(name.length === 2){
+      return name.slice(0, name.length-1).join([', ']) + ' and ' + name[name.length-1];
 
+    }
+    else{
+      return name.slice(0, name.length-1).join([', ']) + ', and ' + name[name.length-1];
+    }
+  }
   return name;
 };
 
@@ -53,8 +58,12 @@ describe('Greeting', function(){
     expect(greeting('ALYSSA')).toEqual('HELLO ALYSSA');
   });
 
-  it('given two names, return Hello Name1 and Name2', function(){
+  it('given two names, return Hello, Name1 and Name2', function(){
     expect(greeting(['Trish', 'Jessica'])).toEqual('Hello, Trish and Jessica');
+  });
+
+  it('given a list of names returns Hello, Name1, Name2 and Name3', function(){
+    expect(greeting(['Hui', 'Ray', 'Annika'])).toEqual('Hello, Hui, Ray, and Annika');
   });
 
   describe('salutation', function(){
