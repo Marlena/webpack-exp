@@ -28,20 +28,19 @@ var names = function(name){
   if (!name) return 'friend';
 
   if (isArray(name)){
-    if(name.length === 2){
-      return name.slice(0, name.length-1).join([', ']) + ' and ' + name[name.length-1];
+    var firstNameSet = name.slice(0, name.length-1).join([', ']);
+    return firstNameSet + andPhrase(name) + name[name.length-1];
+    }
 
-    }
-    else{
-      return name.slice(0, name.length-1).join([', ']) + ', and ' + name[name.length-1];
-    }
-  }
   return name;
 };
 
 var isArray = function(object){
   return (Object.prototype.toString.call( object ) === '[object Array]') && true || false;
+};
 
+var andPhrase = function(names){
+  return (names.length === 2) && ' and ' || ', and ';
 };
 
 describe('Greeting', function(){
@@ -112,6 +111,18 @@ describe('Greeting', function(){
     it('returns false if object is a string', function(){
       subject = 'orange';
       expect(isArray(subject)).toEqual(false);
+    });
+
+    describe('andPhrase', function(){
+      it("given an array with two names, returns and", function(){
+        subject = ['Erica', 'Tracy'];
+        expect(andPhrase(subject)).toEqual(' and ');
+      });
+
+      it("given an array with more than two names, returns and with oxford comma ", function(){
+        subject = ['Jay', 'Deb', 'Sameer'];
+        expect(andPhrase(subject)).toEqual(', and ');
+      });
     });
   });
 });
