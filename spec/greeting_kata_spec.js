@@ -2,8 +2,31 @@ var subject = 'Lourdes';
 
 var greeting = function(name){
 
+  var regex = /\b([A-Z]{2,})\b/g;
+  if (regex.test(name) && isArray(name) && name.length > 1){
+    return salutation(capitalizedNames(name)) + names(capitalizedNames(name)) + '.  ' + allCapsGreeting(name);
+  }
   return salutation(name) + names(name);
 
+};
+
+var allCapsGreeting = function(names){
+  var regex = /\b([A-Z]{2,})\b/;
+
+  //filter out all caps names
+  var allCapsNames  = names.filter(function(name) {
+    return regex.test(name)
+  });
+
+  return 'AND HELLO ' + allCapsNames.join(',') + '!';
+};
+
+var capitalizedNames = function(names){
+  var regex = /\b([A-Z]{2,})\b/;
+
+  return names.filter(function(name) {
+    return !regex.test(name)
+  });
 };
 
 var salutation = function(name){
@@ -65,6 +88,12 @@ describe('Greeting', function(){
     expect(greeting(['Hui', 'Ray', 'Annika'])).toEqual('Hello, Hui, Ray, and Annika');
   });
 
+  describe('when normal and shouted names are mixed', function(){
+    it('then returns the shouted name at the end of the greeting', function(){
+      expect(greeting(['Bella', 'EDWARD', 'Jacob'])).toEqual('Hello, Bella and Jacob.  AND HELLO EDWARD!');
+    })
+  });
+
   describe('salutation', function(){
 
     it('given a capitalized name returns Hello', function(){
@@ -123,6 +152,21 @@ describe('Greeting', function(){
         subject = ['Jay', 'Deb', 'Sameer'];
         expect(andPhrase(subject)).toEqual(', and ');
       });
+    });
+  });
+
+  describe('Given a name in all caps in a list', function(){
+
+    beforeEach(function(){
+      subject = ['MEI', 'Moshe'];
+    });
+
+    it('an all caps greeting is returned', function(){
+      expect(allCapsGreeting(subject)).toEqual('AND HELLO MEI!');
+    });
+
+    it('is removed from the other names list', function(){
+      expect(capitalizedNames(subject)).toEqual(['Moshe']);
     });
   });
 });
