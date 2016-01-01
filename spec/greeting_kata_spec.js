@@ -1,51 +1,40 @@
 var subject = 'Lourdes';
 
 var greeting = function(name){
-
-  var regex = /\b([A-Z]{2,})\b/g;
-  if (regex.test(name) && isArray(name) && name.length > 1){
-    return salutation(capitalizedNames(name)) + names(capitalizedNames(name)) + '.  ' + allCapsGreeting(name);
+  if (isAllCaps(name) && isArray(name) && name.length > 1){
+    return salutation(capitalizedNames(name)) + names(capitalizedNames(name)) + allCapsGreeting(name);
   }
   return salutation(name) + names(name);
 
 };
 
 var allCapsGreeting = function(names){
-  var regex = /\b([A-Z]{2,})\b/;
+  return '.  AND HELLO ' + allCapsNames(names).join(',') + '!';
+};
 
-  //filter out all caps names
-  var allCapsNames  = names.filter(function(name) {
-    return regex.test(name)
+var allCapsNames = function(names){
+  return  names.filter(function(name) {
+    return isAllCaps(name)
   });
-
-  return 'AND HELLO ' + allCapsNames.join(',') + '!';
 };
 
 var capitalizedNames = function(names){
-  var regex = /\b([A-Z]{2,})\b/;
-
   return names.filter(function(name) {
-    return !regex.test(name)
+    return !isAllCaps(name)
   });
 };
 
 var salutation = function(name){
-
   var salutation = 'Hello ';
 
   if (isArray(name)){
     salutation = 'Hello, ';
   }
-
-  //look for at least two uppercase letters in a word
-  var regex = /\b([A-Z]{2,})\b/g;
-
-  return (regex.test(name) && salutation.toUpperCase()) || salutation;
+  return (isAllCaps(name) && salutation.toUpperCase()) || salutation;
 
 };
 
 var names = function(name){
-
   //what if there were two functions, first name and last name.
   //if there is only 1 name, last name returns empty.
   if (!name) return 'friend';
@@ -66,9 +55,17 @@ var andPhrase = function(names){
   return (names.length === 2) && ' and ' || ', and ';
 };
 
+var isAllCaps = function(names){
+  //look for at least two uppercase letters in a word
+  var regex = /\b([A-Z]{2,})\b/;
+  return regex.test(names);
+};
+
 describe('Greeting', function(){
+  var subject;
 
   it('given a name returns hello name', function(){
+    subject = 'Lourdes';
     expect(greeting(subject)).toEqual('Hello Lourdes');
   });
 
@@ -91,7 +88,11 @@ describe('Greeting', function(){
   describe('when normal and shouted names are mixed', function(){
     it('then returns the shouted name at the end of the greeting', function(){
       expect(greeting(['Bella', 'EDWARD', 'Jacob'])).toEqual('Hello, Bella and Jacob.  AND HELLO EDWARD!');
-    })
+    });
+  });
+
+  it('when given entries in name are a string containing a comma, split it as its own input', function(){
+    expect()
   });
 
   describe('salutation', function(){
@@ -111,7 +112,6 @@ describe('Greeting', function(){
   });
 
   describe('names', function(){
-
     var name;
 
     it('returns a name', function(){
@@ -162,11 +162,29 @@ describe('Greeting', function(){
     });
 
     it('an all caps greeting is returned', function(){
-      expect(allCapsGreeting(subject)).toEqual('AND HELLO MEI!');
+      expect(allCapsGreeting(subject)).toEqual('.  AND HELLO MEI!');
     });
 
     it('is removed from the other names list', function(){
       expect(capitalizedNames(subject)).toEqual(['Moshe']);
+    });
+
+    describe('allCapsNames', function(){
+      it('given a list returns a list of names in all caps', function(){
+        expect(allCapsNames(subject)).toEqual(['MEI']);
+      });
+    });
+  });
+
+  describe('isAllCaps', function(){
+    it('returns true given a word in all caps', function(){
+      subject = 'DOT';
+      expect(isAllCaps(subject)).toEqual(true);
+    });
+
+    it('returns true given an array containing a word in all caps', function(){
+      subject = ['Serena','DOT'];
+      expect(isAllCaps(subject)).toEqual(true);
     });
   });
 });
