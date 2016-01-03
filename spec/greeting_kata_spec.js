@@ -1,10 +1,11 @@
-var subject = 'Lourdes';
-
 var greeting = function(name){
+
+  name = expandNames(name);
+
   if (isAllCaps(name) && isArray(name) && name.length > 1){
     return salutation(capitalizedNames(name)) + names(capitalizedNames(name)) + allCapsGreeting(name);
   }
-  return salutation(name) + names(name);
+  return salutation(name) + names(name) + '.';
 
 };
 
@@ -61,28 +62,55 @@ var isAllCaps = function(names){
   return regex.test(names);
 };
 
+var expandNames = function(names){
+
+  if (isArray(names) && names.length >= 1) {
+    var newNames = [];
+    var regex = /,/;
+    var innerNames = [];
+
+
+    names.forEach(function(name) {
+
+      if (regex.test(name)) {
+        innerNames = name.split([',']);
+        innerNames.forEach(function(innerName) {
+          newNames.push(innerName.trim());
+        })
+      }
+      else {
+        newNames.push(name);
+      }
+    });
+
+
+    return newNames;
+  }
+  else return names;
+};
+
 describe('Greeting', function(){
   var subject;
 
   it('given a name returns hello name', function(){
     subject = 'Lourdes';
-    expect(greeting(subject)).toEqual('Hello Lourdes');
+    expect(greeting(subject)).toEqual('Hello Lourdes.');
   });
 
   it('when not given a name returns a hello friend', function(){
-    expect(greeting()).toEqual('Hello friend');
+    expect(greeting()).toEqual('Hello friend.');
   });
 
   it('given ALYSSA returns HELLO ALYSSA', function(){
-    expect(greeting('ALYSSA')).toEqual('HELLO ALYSSA');
+    expect(greeting('ALYSSA')).toEqual('HELLO ALYSSA.');
   });
 
   it('given two names, return Hello, Name1 and Name2', function(){
-    expect(greeting(['Trish', 'Jessica'])).toEqual('Hello, Trish and Jessica');
+    expect(greeting(['Trish', 'Jessica'])).toEqual('Hello, Trish and Jessica.');
   });
 
   it('given a list of names returns Hello, Name1, Name2 and Name3', function(){
-    expect(greeting(['Hui', 'Ray', 'Annika'])).toEqual('Hello, Hui, Ray, and Annika');
+    expect(greeting(['Hui', 'Ray', 'Annika'])).toEqual('Hello, Hui, Ray, and Annika.');
   });
 
   describe('when normal and shouted names are mixed', function(){
@@ -91,9 +119,37 @@ describe('Greeting', function(){
     });
   });
 
-  it('when given entries in name are a string containing a comma, split it as its own input', function(){
-    expect()
+  describe("given a name entry with a string containing a comma ", function(){
+    it('returns a greeting with one set of names', function(){
+      expect(greeting(["Lourdes", "Charlie, Dianne"])).toEqual('Hello, Lourdes, Charlie, and Dianne.');
+    });
+
+    describe('expandNames', function(){
+      beforeEach(function(){
+        subject = ["Lourdes", "Charlie, Dianne"];
+      });
+
+      it('returns one array containing all names', function(){
+        expect(expandNames(subject)).toEqual(['Lourdes', 'Charlie', 'Dianne']);
+      });
+
+      it('returns the original name if there is nothing to expand', function(){
+        subject = ['Lourdes', 'Charlie', 'Dianne'];
+        expect(expandNames(subject)).toEqual(['Lourdes', 'Charlie', 'Dianne']);
+      });
+
+      it('returns one name if only name is passed in', function(){
+        expect(expandNames('Alyssa')).toEqual('Alyssa');
+      });
+
+      it('given an empty string returns an empty string', function(){
+        expect(expandNames('')).toEqual('');
+      });
+
+    });
+
   });
+
 
   describe('salutation', function(){
 
@@ -123,7 +179,6 @@ describe('Greeting', function(){
 
       expect(names(name)).toEqual('friend');
     });
-
     it('Given 2 names, returns Name1 and Name2', function(){
       name = ['Trish', 'Jessica'];
 
@@ -187,5 +242,6 @@ describe('Greeting', function(){
       expect(isAllCaps(subject)).toEqual(true);
     });
   });
+
 });
 
