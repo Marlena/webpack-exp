@@ -1,6 +1,6 @@
 var greeting = function(name){
 
-  name = expandNames(name);
+  name = flattenNames(name);
 
   if (isAllCaps(name) && isArray(name) && name.length > 1){
     return salutation(capitalizedNames(name)) + names(capitalizedNames(name)) + allCapsGreeting(name);
@@ -62,29 +62,16 @@ var isAllCaps = function(names){
   return regex.test(names);
 };
 
-var expandNames = function(names){
+var flattenNames = function(names){
 
   if (isArray(names) && names.length >= 1) {
-    var newNames = [];
-    var regex = /,/;
-    var innerNames = [];
+    var flattenedNames = [];
+    var regex = /\s*,\s*/; //look for a comma with 0 or more spaces after it
 
+    flattenedNames = names.reduce(function(a,b) {
+      return a.concat(b.split(regex));}, []);
 
-    names.forEach(function(name) {
-
-      if (regex.test(name)) {
-        innerNames = name.split([',']);
-        innerNames.forEach(function(innerName) {
-          newNames.push(innerName.trim());
-        })
-      }
-      else {
-        newNames.push(name);
-      }
-    });
-
-
-    return newNames;
+    return flattenedNames;
   }
   else return names;
 };
@@ -124,26 +111,26 @@ describe('Greeting', function(){
       expect(greeting(["Lourdes", "Charlie, Dianne"])).toEqual('Hello, Lourdes, Charlie, and Dianne.');
     });
 
-    describe('expandNames', function(){
+    describe('flattenNames', function(){
       beforeEach(function(){
         subject = ["Lourdes", "Charlie, Dianne"];
       });
 
       it('returns one array containing all names', function(){
-        expect(expandNames(subject)).toEqual(['Lourdes', 'Charlie', 'Dianne']);
+        expect(flattenNames(subject)).toEqual(['Lourdes', 'Charlie', 'Dianne']);
       });
 
       it('returns the original name if there is nothing to expand', function(){
         subject = ['Lourdes', 'Charlie', 'Dianne'];
-        expect(expandNames(subject)).toEqual(['Lourdes', 'Charlie', 'Dianne']);
+        expect(flattenNames(subject)).toEqual(['Lourdes', 'Charlie', 'Dianne']);
       });
 
       it('returns one name if only name is passed in', function(){
-        expect(expandNames('Alyssa')).toEqual('Alyssa');
+        expect(flattenNames('Alyssa')).toEqual('Alyssa');
       });
 
       it('given an empty string returns an empty string', function(){
-        expect(expandNames('')).toEqual('');
+        expect(flattenNames('')).toEqual('');
       });
 
     });
