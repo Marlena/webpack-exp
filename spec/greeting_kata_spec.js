@@ -1,11 +1,11 @@
 var greeting = function(name){
 
-  var names = flattenNames(name);
+  var namesList = flattenNames(name);
 
-  if (isAllCaps(names) && isArray(names) && names.length > 1){
-    return salutation(capitalizedNames(names)) + names(capitalizedNames(names)) + allCapsGreeting(names);
+  if (isAllCaps(namesList) && isArray(namesList) && namesList.length > 1){
+    return salutation(capitalizedNames(namesList)) + names(capitalizedNames(namesList)) + allCapsGreeting(namesList);
   }
-  return salutation(names) + names(names) + '.';
+  return salutation(namesList) + names(namesList) + '.';
 
 };
 
