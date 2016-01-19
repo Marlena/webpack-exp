@@ -1,21 +1,21 @@
 var add = function(numString){
 
+  var sum;
   var numArray = parseIntArray(numString);
 
-  if (numArray === 0) return 0;
-
   //destructuring
-  var [addend, augend] = numArray;
+  var [addend] = numArray;
 
   if(numArray.length > 1){
-    return augend + addend;
+    sum = numArray.reduce((previous, current) => previous + current);
+    return sum;
   }
   return (addend > 0) && addend || 0;
 };
 
 var parseIntArray = function (numString){
 
-  if (numString === '') return 0;
+  if (numString === '') return [0];
 
   var intArray = [];
   var numStringArray = numString.split([',']);
@@ -42,6 +42,10 @@ describe('The Calculator Kata', function(){
       expect(add('1,2')).toEqual(3);
     });
 
+    it('given a set of numbers, returns the sum', function(){
+      expect(add('1,2,3,5,8')).toEqual(19);
+    });
+
     describe('parseIntArray', function(){
       it('given a string of numbers, returns and array of ints', function(){
         expect(parseIntArray('1,2')).toEqual([1, 2])
@@ -52,7 +56,7 @@ describe('The Calculator Kata', function(){
       });
 
       it('given an empty string returns 0', function(){
-        expect(parseIntArray('')).toEqual(0);
+        expect(parseIntArray('')).toEqual([0]);
       })
     });
 
