@@ -1,29 +1,46 @@
-var add = function(numString){
+//refactor: make a class
+//method change these methods to method chaining
+//figured out that I need to make a class so that I can reuse the
+//references for method chaining
 
-  var sum;
-  var numArray = parseIntArray(numString);
+const add = function(numString){
+
+  let sum;
+
+  const parsedString = removeNewLine(numString);
+  const numArray = parseIntArray(parsedString);
 
   //destructuring
-  var [addend] = numArray;
+  const [addend] = numArray;
 
   if(numArray.length > 1){
+    //arrow syntax
     sum = numArray.reduce((previous, current) => previous + current);
     return sum;
   }
   return (addend > 0) && addend || 0;
 };
 
-var parseIntArray = function (numString){
+const parseIntArray = function (numString){
 
   if (numString === '') return [0];
 
-  var intArray = [];
-  var numStringArray = numString.split([',']);
+  const intArray = [];
+  const numStringArray = numString.split([',']);
 
   //arrow syntax
-  numStringArray.forEach( num => intArray.push(parseInt(num)) );
+  numStringArray.forEach(num => intArray.push(parseInt(num)) );
 
   return intArray;
+};
+
+const removeNewLine = function (str) {
+  let parsedStr = '';
+  const regex = (/\n/);
+
+  parsedStr = str.replace(regex, ',');
+
+  return parsedStr;
 };
 
 describe('The Calculator Kata', function(){
@@ -46,6 +63,11 @@ describe('The Calculator Kata', function(){
       expect(add('1,2,3,5,8')).toEqual(19);
     });
 
+    it('given a newline in the set of numbers, returns the sum', function(){
+      //“1\n2,3”  (will equal 6)
+      expect(add("1\n2,3")).toEqual(6);
+    });
+
     describe('parseIntArray', function(){
       it('given a string of numbers, returns and array of ints', function(){
         expect(parseIntArray('1,2')).toEqual([1, 2])
@@ -57,7 +79,17 @@ describe('The Calculator Kata', function(){
 
       it('given an empty string returns 0', function(){
         expect(parseIntArray('')).toEqual([0]);
-      })
+      });
+    });
+
+    describe('RemoveNewLines', function(){
+      it('given a string containing newlines returns the string without them', function(){
+        expect(removeNewLine("1\n2,3")).toEqual("1,2,3");
+      });
+
+      it('given a string without a newline, returns the string unmutated', function(){
+        expect(removeNewLine('1,2,3')).toEqual("1,2,3");
+      });
     });
 
   });
