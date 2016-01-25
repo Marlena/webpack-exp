@@ -2,6 +2,7 @@
 //method change these methods to method chaining
 //figured out that I need to make a class so that I can reuse the
 //references for method chaining
+require('./spec_helper');
 
 const add = function(numString){
 
@@ -43,7 +44,20 @@ const removeNewLine = function (str) {
   return parsedStr;
 };
 
+
 describe('The Calculator Kata', function(){
+  let subject;
+  let Calculator = require ('../src/calculator');
+
+  beforeEach(() => {
+    subject = new Calculator('0');
+  });
+
+  describe('Calculator', () => {
+    it('adds', () => {
+      expect(subject.add('')).toEqual(0);
+    });
+  });
 
   describe('add', function(){
 
