@@ -8,7 +8,7 @@ describe('In the Calculator Kata', () => {
   let Calculator = require ('../src/calculator');
 
   beforeEach(() => {
-    subject = new Calculator('0');
+    subject = Calculator;
   });
 
   describe('the Calculator', () => {
@@ -42,9 +42,6 @@ describe('In the Calculator Kata', () => {
     });
 
     describe('parseIntArray', () => {
-      beforeEach(() => {
-        subject = new Calculator('0');
-      });
 
       it('given a string of numbers, returns and array of ints', () => {
         expect(subject.parseIntArray('1,2')).toEqual([1, 2])
@@ -60,9 +57,6 @@ describe('In the Calculator Kata', () => {
     });
 
     describe('RemoveNewLines', () => {
-      beforeEach(() => {
-        subject = new Calculator('0');
-      });
 
       it('given a string containing newlines returns the string without them', () => {
         expect(subject.removeNewLine("1\n2,3")).toEqual("1,2,3");
@@ -74,9 +68,6 @@ describe('In the Calculator Kata', () => {
     });
 
     describe('method delimiter', () => {
-      beforeEach(() => {
-        subject = new Calculator();
-      });
 
       it('returns the delimiter', () => {
         expect(subject.delimiter("//;\n1;2")).toEqual(';');

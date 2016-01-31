@@ -1,5 +1,7 @@
-class Calculator{
+let Calculator = {
 
+  //the add signature uses concise method syntax
+  //https://github.com/esnext/es6-object-concise
   add(numString){
 
     let sum;
@@ -15,7 +17,7 @@ class Calculator{
       return sum;
     }
     return (addend > 0) && addend || 0;
-  };
+  },
 
   removeNewLine(str){
     let parsedStr = '';
@@ -23,7 +25,7 @@ class Calculator{
     parsedStr = str.replace(regex, ',');
 
     return parsedStr;
-  }
+  },
 
   parseIntArray(numString){
 
@@ -36,7 +38,7 @@ class Calculator{
     numStringArray.forEach(num => intArray.push(parseInt(num)) );
 
     return intArray;
-  }
+  },
 
   delimiter(str){
 
@@ -53,13 +55,13 @@ class Calculator{
       return regexArray[1];
     }
     return str;
-  };
+  },
 
   delimiterRegEx(str){
     const regEx = new RegExp("^//");
     if (regEx.test(str)) return true;
     return false;
-  }
+  },
 
   delimitWithCommas(str){
 
@@ -77,6 +79,6 @@ class Calculator{
 
     return commaStr;
   }
-}
+};
 
-export {Calculator as default};
+module.exports = Calculator;
