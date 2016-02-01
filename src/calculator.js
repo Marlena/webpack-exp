@@ -75,9 +75,7 @@ let Calculator = {
     const regexArray = regex.exec(str);
     const delimitedStr = regexArray[2];
 
-    const commaStr = delimitedStr.replace(regexDelimiter, ',');
-
-    return commaStr;
+    return delimitedStr.replace(regexDelimiter, ',');
   }
 };
 
