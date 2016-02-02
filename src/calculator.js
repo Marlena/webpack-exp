@@ -4,40 +4,16 @@ let Calculator = {
   //https://github.com/esnext/es6-object-concise
   add(numString){
 
-    let sum;
-    //pre-process the string into shape
-    const numArray = this.parseIntArray(this.removeNewLine(this.delimitWithCommas(numString)));
+    //pre-process the string into an array of int
+    const numArray = this.buildIntArray(numString);
 
-    //destructuring
-    const [addend] = numArray;
-
-    if(numArray.length > 1){
-      //arrow syntax
-      sum = numArray.reduce((previous, current) => previous + current);
-      return sum;
-    }
-    return (addend > 0) && addend || 0;
+    return numArray.reduce((memo, i) => memo + i, 0);
   },
 
-  removeNewLine(str){
-    let parsedStr = '';
-    const regex = (/\n/);
-    parsedStr = str.replace(regex, ',');
-
-    return parsedStr;
-  },
-
-  parseIntArray(numString){
-
-    if (numString === '') return [0];
-
-    const intArray = [];
-    let numStringArray = numString.split([',']);
-
-    //arrow syntax
-    numStringArray.forEach(num => intArray.push(parseInt(num)) );
-
-    return intArray;
+  delimiterRegEx(str){
+    const regEx = new RegExp("^//");
+    if (regEx.test(str)) return true;
+    return false;
   },
 
   delimiter(str){
@@ -57,25 +33,25 @@ let Calculator = {
     return str;
   },
 
-  delimiterRegEx(str){
-    const regEx = new RegExp("^//");
-    if (regEx.test(str)) return true;
-    return false;
-  },
+  buildIntArray(str){
 
-  delimitWithCommas(str){
-
-    if (!this.delimiterRegEx(str)) return str;
+    if (!this.delimiterRegEx(str)){
+      return JSON.parse(`[${str.replace(/\n/, ',')}]`);
+    }
 
     const delimiter = this.delimiter(str);
-    const regexDelimiter = new RegExp(delimiter);
 
-    //extract everything after the delimiter line
+    return JSON.parse(`[${this.extractList(str).replace(delimiter, ',')}]`)
+  },
+
+  extractList(str){
+    if (!this.delimiterRegEx(str)) return str;
+
     const regex = new RegExp("\/\/(.*)\\n(.*)");
     const regexArray = regex.exec(str);
     const delimitedStr = regexArray[2];
 
-    return delimitedStr.replace(regexDelimiter, ',');
+    return delimitedStr;
   }
 };
 

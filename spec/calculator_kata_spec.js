@@ -41,32 +41,6 @@ describe('In the Calculator Kata', () => {
       })
     });
 
-    describe('parseIntArray', () => {
-
-      it('given a string of numbers, returns and array of ints', () => {
-        expect(subject.parseIntArray('1,2')).toEqual([1, 2])
-      });
-
-      it('given a string with one number, returns the number as an int', () => {
-        expect(subject.parseIntArray('1')).toEqual([1]);
-      });
-
-      it('given an empty string returns 0', () => {
-        expect(subject.parseIntArray('')).toEqual([0]);
-      });
-    });
-
-    describe('RemoveNewLines', () => {
-
-      it('given a string containing newlines returns the string without them', () => {
-        expect(subject.removeNewLine("1\n2,3")).toEqual("1,2,3");
-      });
-
-      it('given a string without a newline, returns the string unmutated', () => {
-        expect(subject.removeNewLine('1,2,3')).toEqual("1,2,3");
-      });
-    });
-
     describe('method delimiter', () => {
 
       it('returns the delimiter', () => {
@@ -84,11 +58,21 @@ describe('In the Calculator Kata', () => {
       });
     });
 
-    describe(' method delimitWithComma', () => {
-      it('returns a list delimited with commas', () => {
-        expect(subject.delimitWithCommas("//;\n1;2")).toEqual('1,2');
+    describe(' method buildIntArray', () => {
+      it('returns an array of ints', () => {
+        expect(subject.buildIntArray("//;\n1;2")).toEqual([1, 2]);
       });
-    })
+    });
+
+    describe(' method extractList', () => {
+      it('returns a list', () => {
+        expect(subject.extractList("//;\n1;2")).toEqual('1;2');
+      });
+
+      it('returns a list if given a list', () => {
+        expect(subject.extractList("1,2")).toEqual('1,2');
+      });
+    });
 
   });
 });
