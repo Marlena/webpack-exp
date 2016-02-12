@@ -49,6 +49,7 @@ var names = function(name){
 };
 
 var isArray = function(object){
+  //found this in stack overflow for checking that something is an array
   return (Object.prototype.toString.call( object ) === '[object Array]') && true || false;
 };
 
@@ -65,13 +66,10 @@ var isAllCaps = function(names){
 var flattenNames = function(names){
 
   if (isArray(names) && names.length >= 1) {
-    var flattenedNames = [];
     var regex = /\s*,\s*/; //look for a comma with 0 or more spaces after it
 
-    flattenedNames = names.reduce(function(a,b) {
+    return names.reduce(function(a,b) {
       return a.concat(b.split(regex));}, []);
-
-    return flattenedNames;
   }
   else return names;
 };

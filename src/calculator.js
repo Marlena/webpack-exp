@@ -7,7 +7,7 @@ let Calculator = {
     //pre-process the string into an array of int
     const numArray = this.buildIntArray(numString);
 
-    return numArray.reduce((memo, i) => memo + i, 0);
+    return numArray.reduce((previous, current) => previous + current, 0);
   },
 
   delimiterRegEx(str){
@@ -47,11 +47,10 @@ let Calculator = {
   extractList(str){
     if (!this.delimiterRegEx(str)) return str;
 
+    //extract the last line into a regex group
     const regex = new RegExp("\/\/(.*)\\n(.*)");
     const regexArray = regex.exec(str);
-    const delimitedStr = regexArray[2];
-
-    return delimitedStr;
+    return regexArray[2];
   }
 };
 
