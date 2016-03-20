@@ -11,10 +11,13 @@ let Scrabble = {
     let score = 0;
 
     const scoreMap = {
-      1:'A, E, I, O, U, L, N, R, S, T, a, e, i, o, u, l, n, r, s, t',
-      4:'F, H, V, W, Y, f, h, v, w, y',
-      5:'K, k',
-      10: 'Z,z,Q,q'
+      1:'A, E, I, O, U, L, N, R, S, T',
+      2:'D, G',
+      3:'B, C, M, P',
+      4:'F, H, V, W, Y',
+      5:'K',
+      8:'J, X',
+      10:'Z,Q'
     };
 
     let scoreKeys = Object.keys(scoreMap);
@@ -23,10 +26,10 @@ let Scrabble = {
       let scoreList =  eval(`scoreMap[\'${scoreKey}\']`) + '';
 
       Array.from(word).map((character) =>{
-        if (scoreList.includes(character)){
+        if (scoreList.includes(character) ||
+            scoreList.toLowerCase().includes(character)){
           return score += parseInt(scoreKey);
         }
-
       });
     });
 

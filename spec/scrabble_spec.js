@@ -28,8 +28,12 @@ describe('Scrabble', () => {
     expect(Scrabble.scoreWord('quirky')).toEqual(22);
   });
 
-  xit('scores case insensitive words', () =>  {
-    expect(score('MULTIBILLIONAIRE')).toEqual(20);
+  it('scores all uppercase words', () =>  {
+    expect(Scrabble.scoreWord('MULTIBILLIONAIRE')).toEqual(20);
+  });
+
+  it('scores all lowercase words', () => {
+    expect(Scrabble.scoreWord('multimillionaire')).toEqual(20);
   });
 
 
