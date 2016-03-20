@@ -4,14 +4,7 @@ let Scrabble = {
 
     if (word === null || word.length <= 0) return 0;
 
-
-    let score = this.groupFive(word);
-    score += this.groupOne(word);
-    score += this.groupSix(word);
-    score += this.groupEight(word);
-
-
-    return score;
+    return this.groupAll(word);
   },
 
   groupEight(word){
