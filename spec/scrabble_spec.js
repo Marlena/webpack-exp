@@ -97,9 +97,9 @@ describe('Scrabble', () => {
       expect(Scrabble.scoreCharacter('a', scoreList, scoreKey)).toEqual(1);
     });
 
-    //it ('returns 0 for no match', ()=>{
-    //  expect(Scrabble.scoreCharacter('f', scoreList, scoreKey)).toEqual(0));
-    //});
+    it ('returns 0 for no match', ()=>{
+      expect(Scrabble.scoreCharacter('f', scoreList, scoreKey)).toEqual(0);
+    });
 
   });
 

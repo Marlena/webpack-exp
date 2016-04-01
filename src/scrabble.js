@@ -22,13 +22,15 @@ let Scrabble = {
 
     let scoreKeys = Object.keys(scoreMap);
 
-    scoreKeys.forEach((scoreKey)=>{
-      let scoreList =  eval(`scoreMap[\'${scoreKey}\']`) + '';
-
       Array.from(word).map((character) =>{
-        if (scoreList.toUpperCase().includes(character) || scoreList.toLowerCase().includes(character)){
+
+        scoreKeys.forEach((scoreKey)=>{
+          let scoreList =  eval(`scoreMap[\'${scoreKey}\']`) + '';
+
+
+          if (scoreList.toUpperCase().includes(character) || scoreList.toLowerCase().includes(character)){
           return wordScore += this.scoreCharacter(character, scoreList, scoreKey);
-        }
+          }
       });
     });
 
@@ -36,9 +38,13 @@ let Scrabble = {
   },
 
   scoreCharacter(character, scoreList, scoreKey){
+
     if (scoreList.toUpperCase().includes(character) ||
         scoreList.toLowerCase().includes(character)){
       return parseInt(scoreKey);
+    }
+    else{
+      return 0;
     }
 
   }
