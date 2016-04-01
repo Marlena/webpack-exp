@@ -8,7 +8,7 @@ let Scrabble = {
   },
 
   calculateScore(word){
-    let score = 0;
+    let wordScore = 0;
 
     const scoreMap = {
       1:'A, E, I, O, U, L, N, R, S, T',
@@ -26,14 +26,21 @@ let Scrabble = {
       let scoreList =  eval(`scoreMap[\'${scoreKey}\']`) + '';
 
       Array.from(word).map((character) =>{
-        if (scoreList.includes(character) ||
-            scoreList.toLowerCase().includes(character)){
-          return score += parseInt(scoreKey);
+        if (scoreList.toUpperCase().includes(character) || scoreList.toLowerCase().includes(character)){
+          return wordScore += this.scoreCharacter(character, scoreList, scoreKey);
         }
       });
     });
 
-    return score;
+    return wordScore;
+  },
+
+  scoreCharacter(character, scoreList, scoreKey){
+    if (scoreList.toUpperCase().includes(character) ||
+        scoreList.toLowerCase().includes(character)){
+      return parseInt(scoreKey);
+    }
+
   }
 
 };

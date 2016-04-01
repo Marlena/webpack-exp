@@ -84,4 +84,25 @@ describe('Scrabble', () => {
       });
     });
 
+  describe('scoreCharacter', () => {
+
+    let scoreList, scoreKey;
+
+    beforeEach(()=>{
+      scoreList = 'a,b';
+      scoreKey = 1;
+    });
+
+    it('returns a score for a single character', () =>{
+      expect(Scrabble.scoreCharacter('a', scoreList, scoreKey)).toEqual(1);
+    });
+
+    //it ('returns 0 for no match', ()=>{
+    //  expect(Scrabble.scoreCharacter('f', scoreList, scoreKey)).toEqual(0));
+    //});
+
+  });
+
+
+
 });
