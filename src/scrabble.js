@@ -26,8 +26,7 @@ let Scrabble = {
 
         scoreKeys.forEach((scoreKey)=>{
           let scoreList =  eval(`scoreMap[\'${scoreKey}\']`) + '';
-
-
+          
           if (scoreList.toUpperCase().includes(character) || scoreList.toLowerCase().includes(character)){
           return wordScore += this.scoreCharacter(character, scoreList, scoreKey);
           }
