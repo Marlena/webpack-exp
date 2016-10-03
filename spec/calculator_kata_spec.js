@@ -3,6 +3,7 @@
 //references for method chaining
 require('./spec_helper');
 
+
 describe('In the Calculator Kata', () => {
   let subject;
   let Calculator = require ('../src/calculator');

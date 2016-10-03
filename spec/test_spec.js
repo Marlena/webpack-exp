@@ -64,25 +64,5 @@ describe ('ES6', function(){
 
   });
 
-  describe('pui-cursor', function(){
-
-    var Cursor, subject;
-
-    beforeEach(function(){
-      Cursor = require ('pui-cursor');
-      subject = new Cursor({'hi':'mom'});
-
-    });
-
-    it ('has a cursor', function(){
-      expect(subject.get('hi')).toEqual('mom');
-    });
-  });
-
-
-
-
-
-
 
 });
